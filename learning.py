@@ -103,13 +103,82 @@ hecoiehgawgea hello
 world'''
 print(multiS)
 
+#pattern matching?
+#i'm assuming it's like regex in acsl :)
+import re
+match = re.match('Hello[ \t]*(.*)world', 'Hello Python world')
+print(match.group(1))
+    #finds group that starts with hello,
+    #zero or more tabs
+    #zero or more characters
+    #ends with world
+match = re.match('Hello[ \t]*(.*)world', 'Hello Python, hello world')
+print(match.groups())
+match = re.match('[/:](.*)[/:](.*)[/:](.*)', '/usr/home:lumberjack')
+print(match.groups())
+match = re.match('[/](.*)[/](.*)', '/usr/home:lumberjack')
+print(match.groups())
+match = re.match('[/](.*)[:](.*)', '/usr/home:lumberjack')
+print(match.groups())
+#can also use split for similar result
+print(re.split('[/:]', '/usr/home/lumberjack'))
 
+#LISTS!!!!!
+L = ['hello', 162, 1.70] #can have different types
+print("length: " + str(len(L)))
+print(L[0])
+print(L[:-1]) #basically similar to strings
+L = L + [3,6,1]
+print(L)
+L += [1,2,3]
+print(L)
+print(L*2) #repeats entire list twice
+#^^ above functions must be set equal to L in order for it to change
 
+#list functions
+L = [1, "hi"]
+L.append("world") #adds "world" to the end
+print(L)
+L.pop(2) #removes the 2nd index
+print(L)
+L = ['c', 'b', 'a', 'h', 'z', 'e']
+L.sort() #puts them in alphabetical order
+print(L)
+L.reverse()
+print(L)
+#L = ['1', 'a', 1, 'abc', '+']
+#L.sort() --> doesn't work btwn types
+#print(L)
 
+#can also nest lists
+M = [[1,2,3],[4,5,6],[7,8,9]]
+print(M)
+print(M[1]) #the 2nd row (0th index again!)
+print(M[1][2]) #second row and third column - just like in Java
 
+#"comprehensions"??
+print([row[1] for row in M]) #gets the 2nd column - kinda annoying
+print([M[i][i] for i in [0,1,2]]) #gets a diagonal
+print([row[1] + 1 for row in M]) #adds one to items in column 2
+print([row[1] for row in M if row[1]%2==0]) #removes odd elements from second column
+print([c*2 for c in 'hannah']) #doubles each character
 
+print(list(range(4))) #prints range from 0 to 3 (length 4)
+print(list(range(10)))
+print(list(range(-6, 8, 2))) #range from -6 to 6, increment by 2
+    #note that the second part of range isn't inclusive
 
+print([[x**2, x**3] for x in range(4)])
+    #creates list consisting of lists of 0-3 ^2 and ^3
+print([[x, x/2, x*2] for x in range(-6, 7, 2) if x>0])
 
+#M = [[1,2,3],[4,5,6],[7,8,9]]
+G = (sum(row) for row in M) #using () creates generators?
+print(next(G))
+print(next(G))
+print(next(G))
+G = [sum(row) for row in M]
+print(G)
 
 
 
