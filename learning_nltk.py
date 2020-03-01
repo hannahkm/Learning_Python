@@ -64,6 +64,10 @@ print("first index of 'letter' in text1:", text1.index("letter"))
 #can also get a range of indices
 print(text5[1239:1258])
 
+#playing with lists
+list1 = ["first", "second", "third", "last"]
+list1[1:3] = ["then"]
+print(list1)
 
 
 

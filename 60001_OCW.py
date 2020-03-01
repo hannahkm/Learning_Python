@@ -687,6 +687,18 @@ print(isPalindrome('Is this a palindrome'))
     #have more than one value at each index - better than having multiple lists
 #####################################
 
+#initializing:
+new_dict = {'Bob':12, 'John':24, 'Hannah':18}
+print(new_dict['Hannah']) #gets the value saved at index Hannah
+print("Is Jimmy in new_dict?:", 'Jimmy' in new_dict) #returns true if Jimmy is a key
+print("dict before delete", new_dict)
+del(new_dict['Bob'])
+print("dict after delete", new_dict)
+new_dict["Tim"] = 129 #creates new key with label "Tim" and value 129
+print("dict with Tim", new_dict)
+print("all keys:", new_dict.keys()) #returns all keys
+print("values:", new_dict.values()) #returns all values
+
 def lyrics_to_frequencies(lyrics):
     myDict = {}
     for word in lyrics:
@@ -860,23 +872,24 @@ print(L)
 ### EXAMPLE: Buggy code to get a list of primes
 ### Try to debug it! (fixes needed are explained below)
 ########################################
-##def primes_list_buggy(n):
-##    """
-##    input: n an integer > 1
-##    returns: list of all the primes up to and including n
-##    """
-##    # initialize primes list
-##    if i == 2:
-##        primes.append(2)
-##    # go through each elem of primes list
-##    for i in range(len(primes)):
-##        # go through each of 2...n
-##        for j in range(len(n)):
-##            # check if not divisible by elem of list
-##            if i%j != 0:
-##                primes.append(i)
-#
-#
+#def primes_list_buggy(n):
+#    """
+#    input: n an integer > 1
+#    returns: list of all the primes up to and including n
+#    """
+#    primes = []
+#    # initialize primes list
+#    if i == 2:
+#        primes.append(2)
+#    # go through each elem of primes list
+#    for i in range(len(primes)):
+#        # go through each of 2...n
+#        for j in range(len(n)):
+#            # check if not divisible by elem of list
+#            if i%j != 0:
+#                primes.append(i)
+
+
 ## FIXES: --------------------------
 ## = invalid syntax, variable i unknown, variable primes unknown
 ## can't apply 'len' to an int
@@ -958,12 +971,12 @@ def get_ratios(L1, L2):
         except:
             raise ValueError('get_ratios called with bad arg')
         else:
-            print("success")
+            print(index, "success")
         finally:
-            print("executed no matter what!")
+            print(index, "executed no matter what!")
     return ratios
     
-print(get_ratios([1, 4], [2, 4]))
+#print(get_ratios([1, 4], [2, 4]))
 
 
 #######################################
@@ -989,9 +1002,9 @@ def avg(grades):
 
 
 # avg function: version with assert
-def avg(grades):
-    assert len(grades) != 0, 'warning: no grades data'
-    return sum(grades)/len(grades)
+#def avg(grades):
+#    assert len(grades) != 0, 'warning: no grades data'
+#    return sum(grades)/len(grades)
 
     
 test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]], 
@@ -1000,6 +1013,133 @@ test_grades = [[['peter', 'parker'], [80.0, 70.0, 85.0]],
               [['deadpool'], []]]
 
 print(get_stats(test_grades))
+#using 1st avg function (using print) allows program to run normally
+#using 2nd avg function (using assert) prints normal error message plus
+    #additional, custom message
+    
+#################
+## EXAMPLE: simple Coordinate class
+#################
+class Coordinate(object):
+    """ A coordinate made up of an x and y value """
+    def __init__(self, x, y):
+        """ Sets the x and y values """
+        self.x = x
+        self.y = y
+    def __str__(self):
+        """ Returns a string representation of self """
+        return "<" + str(self.x) + "," + str(self.y) + ">"
+    def distance(self, other):
+        """ Returns the euclidean distance between two points """
+        x_diff_sq = (self.x-other.x)**2
+        y_diff_sq = (self.y-other.y)**2
+        return (x_diff_sq + y_diff_sq)**0.5
+
+
+c = Coordinate(3,4)
+origin = Coordinate(0,0)
+print(c.x, origin.x)
+print(c.distance(origin))
+print(Coordinate.distance(c, origin))
+print(origin.distance(c))
+print(c)
+
+
+#################
+## EXAMPLE: simple class to represent fractions
+## Try adding more built-in operations like multiply, divide
+### Try adding a reduce method to reduce the fraction (use gcd)
+#################
+class Fraction(object):
+    """
+    A number represented as a fraction
+    """
+    def __init__(self, num, denom):
+        """ num and denom are integers """
+        assert type(num) == int and type(denom) == int, "ints not used"
+        self.num = num
+        self.denom = denom
+    def __str__(self):
+        """ Retunrs a string representation of self """
+        return str(self.num) + "/" + str(self.denom)
+    def __add__(self, other):
+        """ Returns a new fraction representing the addition """
+        top = self.num*other.denom + self.denom*other.num
+        bott = self.denom*other.denom
+        return Fraction(top, bott)
+    def __sub__(self, other):
+        """ Returns a new fraction representing the subtraction """
+        top = self.num*other.denom - self.denom*other.num
+        bott = self.denom*other.denom
+        return Fraction(top, bott)
+    def __float__(self):
+        """ Returns a float value of the fraction """
+        return self.num/self.denom
+    def inverse(self):
+        """ Returns a new fraction representing 1/self """
+        return Fraction(self.denom, self.num)
+
+a = Fraction(1,4)
+b = Fraction(3,4)
+c = a + b # c is a Fraction object
+print(c)
+print(float(c))
+print(Fraction.__float__(c))
+print(float(b.inverse()))
+##c = Fraction(3.14, 2.7) # assertion error
+##print a*b # error, did not define how to multiply two Fraction objects
+
+
+##############
+## EXAMPLE: a set of integers as class
+##############
+class intSet(object):
+    """
+    An intSet is a set of integers
+    The value is represented by a list of ints, self.vals
+    Each int in the set occurs in self.vals exactly once
+    """
+    def __init__(self):
+        """ Create an empty set of integers """
+        self.vals = []
+
+    def insert(self, e):
+        """ Assumes e is an integer and inserts e into self """
+        if not e in self.vals:
+            self.vals.append(e)
+
+    def member(self, e):
+        """ Assumes e is an integer
+        Returns True if e is in self, and False otherwise """
+        return e in self.vals
+
+    def remove(self, e):
+        """ Assumes e is an integer and removes e from self
+        Raises ValueError if e is not in self """
+        try:
+            self.vals.remove(e)
+        except:
+            raise ValueError(str(e) + ' not found')
+
+    def __str__(self):
+        """ Returns a string representation of self """
+        self.vals.sort()
+        return '{' + ','.join([str(e) for e in self.vals]) + '}'
+
+
+s = intSet()
+print(s)
+s.insert(3)
+s.insert(4)
+s.insert(3)
+print(s)
+s.member(3)
+s.member(5)
+s.insert(6)
+print(s)
+#s.remove(3)  # leads to an error
+print(s)
+s.remove(3)
 
 
 
